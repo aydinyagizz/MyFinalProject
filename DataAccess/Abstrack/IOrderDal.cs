@@ -6,8 +6,7 @@ using System.Text;
 
 namespace DataAccess.Abstrack
 {
-    public interface ICategoryDal:IEntityRepository<Category>
+    public interface IOrderDal:IEntityRepository<Order>
     {
-        //interface metotları default public'dir.
     }
 }

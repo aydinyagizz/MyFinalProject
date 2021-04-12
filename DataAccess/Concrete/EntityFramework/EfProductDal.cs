@@ -1,5 +1,7 @@
-﻿using DataAccess.Abstrack;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstrack;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,63 +11,21 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfProductDal : IProductDal
+    //IProductDal'daki operasyonlar EfEntityRepositoryBase'da. EfEntityRepositoryBase içinde IProductDal'ın istediği imzalar olduğu için, EfEntityRepositoryBase içinde IProductDal operasyonlar var zaten. 
+    public class EfProductDal : EfEntityRepositoryBase<Product, NorthwindContext>, IProductDal
     {
-        public void Add(Product entity)
+        public List<ProductDetailDto> GetProductDetails()
         {
-            //bir classı new'lediğimizde o bellekten belli bir zamanda düzenli olarak gelir ve bellekten onu atar. using içerisine yazdığımız nesneler using bitince anında bellekten atılır. 
-            //using; perfonmans açısından ekliyoruz. belleği hızlıca temizleme.
-            //using; IDisposable pattern implementation of c#
+            //iki tabloyu join etme işlemi.
             using (NorthwindContext context = new NorthwindContext())
             {
-                var addedEntity = context.Entry(entity); //veri kaynağını ilişkilendirme. referansı yakalamak.
-                addedEntity.State = EntityState.Added; //eklenecek nesne.
-                context.SaveChanges(); //ekleme işlemi.
+                var result = from p in context.Products
+                             join c in context.Categories
+                             on p.CategoryId equals c.CategoryId
+                             select new ProductDetailDto {ProductId = p.ProductId, ProductName = p.ProductName, CategoryName = c.CategoryName, UnitsInStock = p.UnitsInStock };
+                return result.ToList();
             }
-        }
-
-        public void Delete(Product entity)
-        {
-            //bir classı new'lediğimizde o bellekten belli bir zamanda düzenli olarak gelir ve bellekten onu atar. using içerisine yazdığımız nesneler using bitince anında bellekten atılır. 
-            //using; perfonmans açısından ekliyoruz. belleği hızlıca temizleme.
-            //using; IDisposable pattern implementation of c#
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                var deletedEntity = context.Entry(entity); //veri kaynağını ilişkilendirme. referansı yakalamak.
-                deletedEntity.State = EntityState.Deleted; //silinecek nesne.
-                context.SaveChanges(); //ekleme işlemi.
-            }
-        }
-
-        public Product Get(Expression<Func<Product, bool>> filter)
-        {
-            //tek data getirecek.
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                return context.Set<Product>().SingleOrDefault(filter);
-            }
-        }
-
-        public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
-        {
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                //filter==null'mı eğer null ise hepsini getir. null değil ise filitrelenmiş olarak getir.
-                return filter == null ? context.Set<Product>().ToList() : context.Set<Product>().Where(filter).ToList();
-            }
-        }
-
-        public void Update(Product entity)
-        {
-            //bir classı new'lediğimizde o bellekten belli bir zamanda düzenli olarak gelir ve bellekten onu atar. using içerisine yazdığımız nesneler using bitince anında bellekten atılır. 
-            //using; perfonmans açısından ekliyoruz. belleği hızlıca temizleme.
-            //using; IDisposable pattern implementation of c#
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                var updatedEntity = context.Entry(entity); //veri kaynağını ilişkilendirme. referansı yakalamak.
-                updatedEntity.State = EntityState.Modified; //güncellenecek nesne.
-                context.SaveChanges(); //ekleme işlemi.
-            }
+            
         }
     }
 }
