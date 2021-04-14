@@ -23,6 +23,7 @@ namespace Business.Concrete
 
         public Category GetById(int categoryId)
         {
+            //select * from Categories where CategoryId=3 demek gibi. 
             return _categoryDal.Get(c=>c.CategoryId == categoryId);
         }
     }
