@@ -40,7 +40,7 @@ namespace Business.Concrete
         {
             //iş kodları
 
-            if (DateTime.Now.Hour==21)
+            if (DateTime.Now.Hour==1)
             {
                 //MaintenanceTime; bakım zamanı demek
                 return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
