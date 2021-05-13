@@ -19,6 +19,7 @@ namespace WebAPI.Controllers
         //IoC Container -- Inversion of Control (Değişimin kontrolü)
 
 
+        //Loosely coupled - Geçşek bağlılık
         IProductService _productService;
 
         public ProductsController(IProductService productService)

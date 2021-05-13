@@ -30,9 +30,9 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IProductService, ProductManager>(); //arka planda bir referans oluþturmamýza yarýyor. bizim yerimize new()'leme hareketini yapýyor.
+            //services.AddSingleton<IProductService, ProductManager>(); //arka planda bir referans oluþturmamýza yarýyor. bizim yerimize new()'leme hareketini yapýyor.
             // eðer birisi senden IProductService isterse ona arka planda ProductManager oluþtur onu ver demek üstteki kod.
-            services.AddSingleton<IProductDal, EfProductDal>();
+            //services.AddSingleton<IProductDal, EfProductDal>();
             // eðer birisi senden IProductDal isterse ona arka planda EfProductDal oluþtur onu ver demek üstteki kod.
         }
 
