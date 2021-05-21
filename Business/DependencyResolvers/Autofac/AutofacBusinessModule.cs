@@ -21,6 +21,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfProductDal>().As<IProductDal>().SingleInstance(); //birisi senden IProductDal isterse ona EfProductDal'i register et, EfProductDal örneği ver anlamında. Onları new'le demek.
 
 
+            builder.RegisterType<CategoryManager>().As<ICategoryService>().SingleInstance(); //birisi senden ICategoryService isterse ona CategoryManager'i register et, CategoryManager örneği ver anlamında. Onları new'le demek.
+            builder.RegisterType<EfCategoryDal>().As<ICategoryDal>().SingleInstance(); //birisi senden ICategoryDal isterse ona EfCategoryDal'i register et, EfCategoryDal örneği ver anlamında. Onları new'le demek.
+
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

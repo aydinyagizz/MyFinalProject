@@ -8,6 +8,7 @@ namespace Business.ValidationRules.FluentValidation
 {
     public class ProductValidator : AbstractValidator<Product>
     {
+        //bu kurallar bir constructor'ın içine yazılır.
         public ProductValidator()
         {
             RuleFor(p => p.ProductName).NotEmpty(); //ProductName'i boş geçilemez.

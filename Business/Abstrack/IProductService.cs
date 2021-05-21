@@ -17,5 +17,6 @@ namespace Business.Abstrack
         IDataResult<List<ProductDetailDto>> GetProductDetails();
         IDataResult<Product> GetById(int productId); //sadece product döndürür. tek başına bir ürün döndürür.
         IResult Add(Product product); //yeni ürün ekleme.
+        IResult Update(Product product); //ürün güncelleme.
     }
 }
