@@ -116,7 +116,6 @@ namespace Business.Concrete
         {
             //aynı isimde başka bir ürün eklenemez.
 
-            //select count(*) from products where categoryId = 1 
             var result = _productDal.GetAll(p => p.ProductName == productName).Any();
             if (result)
             {
